@@ -1,7 +1,4 @@
 
-
-
-
 whatsapp-project/
 │
 ├── /src                   # Código fuente del proyecto
