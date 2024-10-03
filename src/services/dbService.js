@@ -18,8 +18,8 @@ const conf = {
 export async function getProducts() {
     try{
         let pool = await sql.connect(conf)
-        let result = await pool.request().query("SELECT TOP 10 CodigoProducto, Nombre FROM INV_PRODUCTOS")
-        console.log("Resultados: ", result.recordset)
+        let result = await pool.request().query("SELECT TOP 5 CodigoProducto, Nombre FROM INV_PRODUCTOS")
+        console.log(result.recordset)
         await pool.close()
         return result.recordset
     }
@@ -27,3 +27,4 @@ export async function getProducts() {
         console.error("Error en la consulta: ", error);
     }
 }
+
