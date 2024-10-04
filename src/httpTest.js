@@ -5,7 +5,7 @@ import axios from "axios"
 
 config()
 
-const url = "http://localhost:3000/test"
+const url = "http://localhost:3000/webhook"
 
 export async function webhookPOST_test(){
   try{
@@ -14,7 +14,12 @@ export async function webhookPOST_test(){
       edad: 19,
       altura: 1.74,
       peso: "67 kg",
-      Profesion: "Developer"
+      Profesion: "Developer",
+      messages: [
+        {
+          algo: "Algo"
+        }
+      ]
     })
       .then(res => {
         console.log(res.data);
@@ -53,7 +58,8 @@ export async function getGlitchTest() {
     })
 }
 
-// webhookPOST_test()
+webhookPOST_test()
 // webhookGET_test()
+// getGlitchTest()
 
-getGlitchTest()
+
