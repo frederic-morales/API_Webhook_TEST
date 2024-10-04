@@ -33,23 +33,26 @@ app.post("/test", (req, res) => {
 })
 
 app.get("/webhook", (req, res) => {
-    const VERIFY_TOKEN = process.env.CLOUD_API_ACCESS_TOKEN
+    const VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN
     const mode = req.query['hub.mode'];
     const token = req.query['hub.verify_token'];
     const challenge = req.query['hub.challenge'];
 
     if (mode && token === VERIFY_TOKEN) {
-        console.log("Webhook verificado");
-        res.status(200).send(challenge)
+        if(mode === "susbcribe" ) {
+            console.log("Webhook verificado");
+            res.status(200).send(challenge)
+        } 
     } else {
-        res.sendStatus(403)
+        res.sendStatus(403).send("Error, verificacion fallida")
     }
 })
 
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
+    console.log(webhookEvent);
+
     console.log("Evento recibido");
-    
     if (webhookEvent.messages) {
         const message = webhookEvent.messages[0]
         console.log("Mensaje recibdo: ", message);
