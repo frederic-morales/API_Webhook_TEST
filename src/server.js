@@ -56,7 +56,8 @@ app.post("/webhook", (req, res) => {
     console.log(webhookEvent.entry[0].changes);
     console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata[0]);
     console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0]);
-    console.log("Message: ",webhookEvent.entry[0].changes[0].value.message[0]);
+    console.log("Messages: ",webhookEvent.entry[0].changes[0].value.messages[0]);
+    console.log("Messages: ",webhookEvent.entry[0].changes[0].value.messages[0].text);
     res.sendStatus(200)
 })
 
