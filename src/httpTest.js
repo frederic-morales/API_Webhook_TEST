@@ -50,8 +50,6 @@ export async function webhookGET_test() {
 
 // webhookPOST_test()
 // webhookGET_test()
-// getGlitchTest()
-
 
 //Enviendo mensajes
 export async function sendTextMessage(textMessage){

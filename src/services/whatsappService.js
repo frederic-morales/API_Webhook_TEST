@@ -141,7 +141,6 @@ export async function sendTemplateText() {
   }
 }
 
-
 export async function sendMessageAfterResponse(name, tel){
   try{
     const data = {
