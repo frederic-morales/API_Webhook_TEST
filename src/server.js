@@ -1,11 +1,12 @@
 import { config } from "dotenv";
-import express, { json } from 'express'
+import express, { json, urlencoded } from "express"
 // import { sendMessage } from './services/whatsappService.js'
 import process from "node:process"
 
 config()
 const app = express()
 app.use(json())
+app.use(urlencoded({ extended: true}))
 
 app.get("/", (req, res) => {
     res.send("Bienvenido al server")
@@ -53,7 +54,6 @@ app.get("/webhook", (req, res) => {
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
     console.log(webhookEvent);
-
     console.log("Evento recibido");
     if (webhookEvent.messages) {
         const message = webhookEvent.messages[0]

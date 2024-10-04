@@ -48,16 +48,6 @@ export async function webhookGET_test() {
   }
 }
 
-export async function getGlitchTest() {
-  axios.get("https://vast-fabulous-marimba.glitch.me")
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err =>{
-      console.log(err);
-    })
-}
-
 // webhookPOST_test()
 webhookGET_test()
 // getGlitchTest()
