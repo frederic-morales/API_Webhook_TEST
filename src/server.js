@@ -55,10 +55,8 @@ app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
     console.log(webhookEvent);
     console.log("Evento recibido");
-    if (webhookEvent.messages) {
-        const message = webhookEvent.messages[0]
-        console.log("Mensaje recibdo: ", message);
-    }
+    console.log(webhookEvent.entry[0]);
+    console.log(webhookEvent.entry[0].changes);
     res.sendStatus(200)
 })
 
