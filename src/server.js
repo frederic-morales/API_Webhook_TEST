@@ -34,14 +34,16 @@ app.post("/test", (req, res) => {
 
 app.get("/webhook", (req, res) => {
     const VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN
-    const mode = req.query['hub.mode'];
-    const token = req.query['hub.verify_token'];
-    const challenge = req.query['hub.challenge'];
 
-    if (mode && token === VERIFY_TOKEN) {
-        if(mode === "susbcribe" ) {
+    const mode = req.query["hub.mode"]
+    const token = req.query["hub.verify_token"]
+    const challenge = req.query["hub.challenge"]
+
+    if (token === VERIFY_TOKEN) {
+        if(mode === "subscribe" ) {
             console.log("Webhook verificado");
-            res.status(200).send(challenge)
+            console.log({mode, token, challenge});
+            res.send(challenge)
         } 
     } else {
         res.sendStatus(403).send("Error, verificacion fallida")

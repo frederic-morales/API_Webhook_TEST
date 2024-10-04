@@ -35,7 +35,7 @@ export async function webhookPOST_test(){
 
 export async function webhookGET_test() {
   try{
-    axios.get(`${url}?nombre=Frederic&Edad=19`)
+    axios.get(`${url}?hub.mode=subscribe&hub.challenge=1158201444&hub.verify_token=StQq1YrzOjkB0HMxfoX5cKkMQ7b8EeeccIkJTtJWQPuv0aaXg4`)
       .then(res => {
         console.log(res.data);
       })
@@ -58,8 +58,8 @@ export async function getGlitchTest() {
     })
 }
 
-webhookPOST_test()
-// webhookGET_test()
+// webhookPOST_test()
+webhookGET_test()
 // getGlitchTest()
 
 
