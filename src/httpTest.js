@@ -49,7 +49,21 @@ export async function webhookGET_test() {
 }
 
 // webhookPOST_test()
-webhookGET_test()
+// webhookGET_test()
 // getGlitchTest()
 
+
+//Enviendo mensajes
+export async function sendTextMessage(textMessage){
+  try{
+    axios.post("http://localhost:3000/SendTextMessage", {
+      message: textMessage
+    })
+  }
+  catch(err){
+    console.log('Error:', err.response ? err.response.data : err.message);
+  }
+}
+
+// sendTextMessage("Enviando mensaje de texto")
 

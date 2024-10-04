@@ -140,3 +140,30 @@ export async function sendTemplateText() {
     console.log('Error:', err.response ? err.response.data : err.message);
   }
 }
+
+
+export async function sendMessageAfterResponse(name, tel){
+  try{
+    const data = {
+          messaging_product: "whatsapp",
+          recipient_type: "individual",
+          to: tel,
+          type: "text",
+          text: {
+            preview_url: false,
+            body: `Hola ${name} recibimos tu mensaje`
+          }
+    }
+    axios.post(url, data, { headers })
+      .then(response => {
+        console.log('Success:', response.data);
+        console.log(data.text.body);
+      })
+      .catch(error => {
+        console.error('Error:', error.response ? error.response.data : error.message);
+      });
+  }
+  catch(error){
+    console.error(error)
+  }
+}

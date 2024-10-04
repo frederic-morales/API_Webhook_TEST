@@ -2,12 +2,12 @@ import { config } from "dotenv";
 import express, { json, urlencoded } from "express"
 // import { sendMessage } from './services/whatsappService.js'
 import process from "node:process"
+import { sendMessage, sendMessageAfterResponse } from "./services/whatsappService.js";
 
 config()
 const app = express()
 app.use(json())
 app.use(urlencoded({ extended: true}))
-
 app.get("/", (req, res) => {
     res.send("Bienvenido al server")
 })
@@ -52,13 +52,16 @@ app.get("/webhook", (req, res) => {
 
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
-    console.log("Evento recibido");
+    console.log("Evento recibido")
     console.log(webhookEvent.entry[0].changes);
-    console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata[0]);
-    console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0]);
-    console.log("Messages: ",webhookEvent.entry[0].changes[0].value.messages[0]);
-    console.log("Messages: ",webhookEvent.entry[0].changes[0].value.messages[0].text);
+    console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata)
+    console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0])
+    const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
+    const tel = webhookEvent.entry[0].changes[0].value.contacts[0].wa_id
+    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0])
+    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0].text)
     res.sendStatus(200)
+    sendMessageAfterResponse(name, tel)
 })
 
 //Iniciar el servidor
@@ -67,8 +70,24 @@ app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 })
 
+app.post("/SendTextMessage", (req, res) => {
+    if(req.body){
+        const data = req.body
+        console.log(data);
+        res.sendStatus(200)
+        sendMessage(data.message)
+    }else{
+        res.sendStatus(403).send("Error")
+    }
+})
+
 
 //Webhook verificado correctamente por meta
 //Server corriendo en render.com
 //Proximo paso: 
 //   1.Recibir un webhook cuando un usuario de WhatsApp envie un mensaje
+//   2.Almacenar los datos correctamente
+//   3.Enviar un mensaje a un cliente por medio de mi server en Render
+
+
+
