@@ -35,7 +35,6 @@ app.post("/test", (req, res) => {
 
 app.get("/webhook", (req, res) => {
     const VERIFY_TOKEN = process.env.MY_VERIFY_TOKEN
-
     const mode = req.query["hub.mode"]
     const token = req.query["hub.verify_token"]
     const challenge = req.query["hub.challenge"]
@@ -53,10 +52,11 @@ app.get("/webhook", (req, res) => {
 
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
-    console.log(webhookEvent);
     console.log("Evento recibido");
-    console.log(webhookEvent.entry[0]);
     console.log(webhookEvent.entry[0].changes);
+    console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata[0]);
+    console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0]);
+    console.log("Message: ",webhookEvent.entry[0].changes[0].value.message[0]);
     res.sendStatus(200)
 })
 
@@ -66,3 +66,8 @@ app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 })
 
+
+//Webhook verificado correctamente por meta
+//Server corriendo en render.com
+//Proximo paso: 
+//   1.Recibir un webhook cuando un usuario de WhatsApp envie un mensaje
