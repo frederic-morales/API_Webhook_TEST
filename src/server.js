@@ -70,19 +70,19 @@ app.post("/SendTextMessage", (req, res) => {
 
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
-    console.log("Body: ")
-    console.log(webhookEvent);
-    console.log(webhookEvent.entry[0].changes);
+    console.log("Body: ", webhookEvent);
+    console.log("Changes: ", webhookEvent.entry[0].changes);
     console.log("Value: ", webhookEvent.entry[0].changes[0].value)
     console.log("Metadata: ", webhookEvent.entry[0].changes[0].value.metadata)
     console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
     console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
     res.sendStatus(200)
 
-    // const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
-    // const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
-    // console.log("Name:", name, "Tel:", tel);
-    // sendMessageAfterResponse(name, tel)
+    const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
+    const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
+    console.log("Name:", name, "Tel:", tel);
+
+    sendMessageAfterResponse(name, tel)
 })
 
 /* OBJETO QUE RECIBE EL SERVER CUANDO UN USUARIO DE WHATSAPP MANDA UN MENSAJE
