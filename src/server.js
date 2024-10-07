@@ -2,12 +2,14 @@ import { config } from "dotenv";
 import express, { json, urlencoded } from "express"
 // import { sendMessage } from './services/whatsappService.js'
 import process from "node:process"
-import { sendMessage, sendMessageAfterResponse } from "./services/whatsappService.js";
+import { sendMessage} from "./services/whatsappService.js";
+// import { sendMessage, sendMessageAfterResponse } from "./services/whatsappService.js";
 
 config()
 const app = express()
 app.use(json())
 app.use(urlencoded({ extended: true}))
+
 app.get("/", (req, res) => {
     res.send("Bienvenido al server")
 })
@@ -50,20 +52,6 @@ app.get("/webhook", (req, res) => {
     }
 })
 
-app.post("/webhook", (req, res) => {
-    const webhookEvent = req.body
-    console.log("Evento recibido")
-    // console.log(webhookEvent.entry[0].changes);
-    // console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata)
-    // console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0])
-    // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0])
-    // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0].text)
-    const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
-    const tel = webhookEvent.entry[0].changes[0].value.contacts[0].wa_id
-    res.sendStatus(200)
-    sendMessageAfterResponse(name, tel)
-})
-
 //Iniciar el servidor
 const PORT = process.env.PORT ?? 1243
 app.listen(PORT, () => {
@@ -81,13 +69,13 @@ app.post("/SendTextMessage", (req, res) => {
     }
 })
 
-
-//Webhook verificado correctamente por meta
-//Server corriendo en render.com
-//Proximo paso: 
-//   1.Recibir un webhook cuando un usuario de WhatsApp envie un mensaje --HECHO
-//   2.Enviar un mensaje a un cliente por medio de mi server en Render --HECHO
-//   3.Almacenar los datos correctamente del usuario en la base datos
-//   4.Mandar info desde la base de datos al usuario cuando el usuario mande un mensaje 
-
+app.post("/webhook", (req, res) => {
+    const webhookEvent = req.body
+    console.log("Body: ")
+    console.log(webhookEvent);
+    // const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
+    // const tel = webhookEvent.entry[0].changes[0].value.contacts[0].wa_id
+    res.sendStatus(200)
+    // sendMessageAfterResponse(name, tel)
+})
 

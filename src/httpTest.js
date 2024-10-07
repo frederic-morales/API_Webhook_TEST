@@ -50,7 +50,6 @@ export async function webhookGET_test() {
 
 // webhookPOST_test()
 // webhookGET_test()
-
 //Enviendo mensajes
 export async function sendTextMessage(textMessage){
   try{
