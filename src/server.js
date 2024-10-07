@@ -77,8 +77,8 @@ app.post("/webhook", (req, res) => {
     // console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
     // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
     console.log(webhookEvent)
-    console.log(webhookEvent.entry[0].changes.field);
-    if(webhookEvent.entry[0].changes.field === 'messages') {
+    console.log(webhookEvent.entry[0].changes[0].field);
+    if(webhookEvent.entry[0].changes[0].field === 'messages') {
         const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
         const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
         console.log("Name:", name, "Tel:", tel);
