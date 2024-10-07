@@ -77,19 +77,20 @@ app.post("/webhook", (req, res) => {
     // console.log("Metadata: ", webhookEvent.entry[0].changes[0].value.metadata)
     // console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
     // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
-    const messageText = webhookEvent.entry[0].changes[0].value.messages[0].text.body
-    const messageArray = messageText.split(" ")
+    const stringText = webhookEvent.entry[0].changes[0].value.messages[0].text.body
+    const messageArray = stringText.split(" ")
     messageArray.forEach(word => {
         if(word === "factura"){
             sendMessage = true
         }
     });
+    console.log(messageArray);
     console.log(webhookEvent)
-    console.log(webhookEvent.entry[0].changes[0].field && sendMessage);
-    if(webhookEvent.entry[0].changes[0].field === 'messages') {
+    console.log(sendMessage);
+    if(webhookEvent.entry[0].changes[0].field === 'messages' && sendMessage) {
         const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
         const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
-        console.log("Name:", name, "Tel:", tel);
+        // console.log("Name:", name, "Tel:", tel);
         sendMessageAfterResponse(name, tel)
     }
     res.sendStatus(200)
