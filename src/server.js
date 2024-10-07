@@ -2,8 +2,7 @@ import { config } from "dotenv";
 import express, { json, urlencoded } from "express"
 // import { sendMessage } from './services/whatsappService.js'
 import process from "node:process"
-import { sendMessage} from "./services/whatsappService.js";
-// import { sendMessage, sendMessageAfterResponse } from "./services/whatsappService.js";
+import { sendMessage, sendMessageAfterResponse } from "./services/whatsappService.js";
 
 config()
 const app = express()
@@ -78,10 +77,48 @@ app.post("/webhook", (req, res) => {
     console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata)
     console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0])
     console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0])
-    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0].text)
-    // const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
+    console.log("text: ", webhookEvent.entry[0].changes[0].value.messages[0].text)
+    const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
     // const tel = webhookEvent.entry[0].changes[0].value.contacts[0].wa_id
+    const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
     res.sendStatus(200)
-    // sendMessageAfterResponse(name, tel)
+    sendMessageAfterResponse(name, tel)
 })
 
+/* OBJETO QUE RECIBE EL SERVER CUANDO UN USUARIO DE WHATSAPP MANDA UN MENSAJE
+
+req.body = {
+    object: 'whatsapp_business_account',
+    entry: [ { id: '0', changes: [Array] } ]
+}
+Objeto recibido en la primera posicion de changes "changes[0]": 
+{
+  "field": "messages",
+  "value": {
+    "messaging_product": "whatsapp",
+    "metadata": {
+      "display_phone_number": "16505551111",
+      "phone_number_id": "123456123"
+    },
+    "contacts": [
+      {
+        "profile": {
+          "name": "test user name"
+        },
+        "wa_id": "16315551181"
+      }
+    ],
+    "messages": [
+      {
+        "from": "16315551181",
+        "id": "ABGGFlA5Fpa",
+        "timestamp": "1504902988",
+        "type": "text",
+        "text": {
+          "body": "this is a text message"
+        }
+      }
+    ]
+  }
+}
+*/
