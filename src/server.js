@@ -75,16 +75,14 @@ app.post("/webhook", (req, res) => {
     console.log(webhookEvent.entry[0].changes);
     console.log("Value: ", webhookEvent.entry[0].changes[0].value)
     console.log("Metadata: ", webhookEvent.entry[0].changes[0].value.metadata)
-    console.log("Statuses: ", webhookEvent.entry[0].changes[0].value.statuses[0])
-    console.log("Pricing: ", webhookEvent.entry[0].changes[0].value.statuses[0].pricing[0])
-    // console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0])
-    // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0])
-    console.log("text: ", webhookEvent.entry[0].changes[0].value.messages[0].text)
-    const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
-    const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
+    console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
+    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
     res.sendStatus(200)
-    console.log("Name:", name, "Tel:", tel);
-    sendMessageAfterResponse(name, tel)
+
+    // const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
+    // const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
+    // console.log("Name:", name, "Tel:", tel);
+    // sendMessageAfterResponse(name, tel)
 })
 
 /* OBJETO QUE RECIBE EL SERVER CUANDO UN USUARIO DE WHATSAPP MANDA UN MENSAJE
