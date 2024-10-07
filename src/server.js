@@ -70,14 +70,22 @@ app.post("/SendTextMessage", (req, res) => {
 
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
+    let sendMessage = false
     // console.log("Body: ", webhookEvent);
     // console.log("Changes: ", webhookEvent.entry[0].changes);
     // console.log("Value: ", webhookEvent.entry[0].changes[0].value)
     // console.log("Metadata: ", webhookEvent.entry[0].changes[0].value.metadata)
     // console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
     // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
+    const messageText = webhookEvent.entry[0].changes[0].value.messages[0].text.body
+    const messageArray = messageText.split(" ")
+    messageArray.forEach(word => {
+        if(word === "factura"){
+            sendMessage = true
+        }
+    });
     console.log(webhookEvent)
-    console.log(webhookEvent.entry[0].changes[0].field);
+    console.log(webhookEvent.entry[0].changes[0].field && sendMessage);
     if(webhookEvent.entry[0].changes[0].field === 'messages') {
         const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
         const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
@@ -86,3 +94,5 @@ app.post("/webhook", (req, res) => {
     }
     res.sendStatus(200)
 })
+
+
