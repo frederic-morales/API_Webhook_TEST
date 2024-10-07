@@ -70,55 +70,17 @@ app.post("/SendTextMessage", (req, res) => {
 
 app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
-    console.log("Body: ", webhookEvent);
-    console.log("Changes: ", webhookEvent.entry[0].changes);
-    console.log("Value: ", webhookEvent.entry[0].changes[0].value)
-    console.log("Metadata: ", webhookEvent.entry[0].changes[0].value.metadata)
-    console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
-    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
+    // console.log("Body: ", webhookEvent);
+    // console.log("Changes: ", webhookEvent.entry[0].changes);
+    // console.log("Value: ", webhookEvent.entry[0].changes[0].value)
+    // console.log("Metadata: ", webhookEvent.entry[0].changes[0].value.metadata)
+    // console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts)
+    // console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages)
+    if(webhookEvent.entry[0].changes.field === 'messages') {
+        const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
+        const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
+        console.log("Name:", name, "Tel:", tel);
+        sendMessageAfterResponse(name, tel)
+    }
     res.sendStatus(200)
-
-    const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
-    const tel = webhookEvent.entry[0].changes[0].value.messages[0].from
-    console.log("Name:", name, "Tel:", tel);
-
-    sendMessageAfterResponse(name, tel)
 })
-
-/* OBJETO QUE RECIBE EL SERVER CUANDO UN USUARIO DE WHATSAPP MANDA UN MENSAJE
-
-req.body = {
-    object: 'whatsapp_business_account',
-    entry: [ { id: '0', changes: [Array] } ]
-}
-Objeto recibido en la primera posicion de changes "changes[0]": 
-{
-  "field": "messages",
-  "value": {
-    "messaging_product": "whatsapp",
-    "metadata": {
-      "display_phone_number": "16505551111",
-      "phone_number_id": "123456123"
-    },
-    "contacts": [
-      {
-        "profile": {
-          "name": "test user name"
-        },
-        "wa_id": "16315551181"
-      }
-    ],
-    "messages": [
-      {
-        "from": "16315551181",
-        "id": "ABGGFlA5Fpa",
-        "timestamp": "1504902988",
-        "type": "text",
-        "text": {
-          "body": "this is a text message"
-        }
-      }
-    ]
-  }
-}
-*/

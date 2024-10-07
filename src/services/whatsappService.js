@@ -96,7 +96,7 @@ export async function sendMessageAfterResponse(name, tel){
           type: "text",
           text: {
             preview_url: false,
-            body: `Hola ${name} recibimos tu mensaje`
+            body: `Hola ${name} recibimos tu mensaje de texto`
           }
     }
     axios.post(url, data, { headers })
