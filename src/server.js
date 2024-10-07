@@ -73,6 +73,12 @@ app.post("/webhook", (req, res) => {
     const webhookEvent = req.body
     console.log("Body: ")
     console.log(webhookEvent);
+    console.log(webhookEvent.entry[0].changes);
+    console.log("Value: ", webhookEvent.entry[0].changes[0].value)
+    console.log("Metada: ", webhookEvent.entry[0].changes[0].value.metadata)
+    console.log("Contacts: ", webhookEvent.entry[0].changes[0].value.contacts[0])
+    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0])
+    console.log("Messages: ", webhookEvent.entry[0].changes[0].value.messages[0].text)
     // const name = webhookEvent.entry[0].changes[0].value.contacts[0].profile.name
     // const tel = webhookEvent.entry[0].changes[0].value.contacts[0].wa_id
     res.sendStatus(200)
